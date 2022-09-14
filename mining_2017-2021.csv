@@ -1,0 +1,24 @@
+,year,2017,2018,2019,2020,2021e
+0,Production:,,,,,
+1,"Mine, recoverable copper content","1,260","1,220","1,260","1,200","1,200"
+2,Refinery:,,,,,
+3,Primary (from ore),"1,040","1,070",985,874,950
+4,Secondary (from scrap),40,41,44,43,50
+5,Copper recovered from old (post-consumer) scrap2,146,149,e150,e150,160
+6,Imports for consumption:,,,,,
+7,Ore and concentrates,14,32,27,2,13
+8,Refined,813,778,663,676,920
+9,Exports:,,,,,
+10,Ore and concentrates,237,253,353,383,360
+11,Refined,94,190,125,41,50
+12,Consumption:,,,,,
+13,"Reported, refined metal","1,800","1,820","1,830","1,710","1,800"
+14,"Apparent, primary refined and old scrap3","1,860","1,830","1,810","1,650","2,000"
+15,"Price, annual average, cents per pound:",,,,,
+16,"U.S. producer, cathode (COMEX + premium)",285.4,298.7,279.6,286.7,430.0
+17,"COMEX, high-grade, first position",280.4,292.6,272.3,279.9,420.0
+18,"London Metal Exchange, grade A, cash",279.5,296.0,272.4,279.8,420.0
+19,"Stocks, refined, held by U.S. producers, consumers, and metal",265,244,111,118,80
+20,"exchanges, yearend",,,,,
+21,"Employment, mine and plant, number","10,500","11,700","12,000","11,000","11,000"
+22,Net import reliance4 as a percentage of apparent consumption,36,33,37,38,45
