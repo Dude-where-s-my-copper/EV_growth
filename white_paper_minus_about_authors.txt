@@ -1,0 +1,75 @@
+EV TAKEOVER
+
+Analyzing an accelerated approach to Electric Vehicle production
+
+Authors
+
+Jarad Angel, Jeremy Lagunas, Kevin Smith, Daniel Ford
+
+Executive Summary
+
+The continued progression of energy
+
+It is no secret, we are in the midst of an energy transformation.  The change consists of shifting away from old energy production, utilization, and sources, towards renewables. Renewable, or “green” energy sources are growing in popularity. In fact, according to the Pew Research Center, 77% of Americans believe it is more important to focus on alternative energy sources rather than continue to develop traditional energy sources (coal, oil, fossil fuels, etc.). With this increase in sentiment towards renewable energy we are beginning to see many organizations, companies, governments, and even fossil fuel corporations advocate for, plan, and commence the transition to carbon neutrality.
+
+A dying breed: ICE going the way of dinosaurs
+
+One of the most prominent industries leading the change is the automotive landscape. The energy transition away from fossil fuels to renewables is evident by the likes of Tesla, the electric vehicle (EV) company which has risen to the top of automakers by market capitalization in only a few years.  Virtually all automakers have some sort of timeline in implementing their partial, or full, transition from internal combustion engines (ICE) to EVs. On top of this, we are seeing new entries into the EV industry to try and capitalize on this young and growing market. These include, but are not limited to: Apple (yes, THE Apple), Polestar, Rivian, Sony, and Chinese company BYD. EV’s promise to be a guiding light to a cleaner future during the twilight of ICE vehicles.
+
+Market forces meet government dictates
+
+The yearning for EVs does not stop at auto makers looking to transition away from ICE vehicles. As climate change pressures mount, government officials are beginning to lay down the ground work to pave the way for pro-EV policies. In a recent statement, President Biden issued a goal for EVs to make up 50% of all vehicles sold in the United States by 2030. This ambitious goal seeks to be supported by the President’s economic agenda, which includes: the Bipartisan Infrastructure Law, the Inflation Reduction Act, and the CHIPS and Science Act. Each of these acts will help foster the growth of the EV industry. The acts include funding for charging networks, incentives for the purchase of TVs, and investments to bolster the production of integral semiconductors here in the U.S. All this support is certainly impressive, but is it enough?
+
+The (potential) elephant in the room
+
+As climate change advocacy increases, so does the support for substantial increases in future production and sales of EVs. One area of support seemingly missing from the conversation is supporting the increase in copper production necessary to  enable the desired increase in EV utilization. Especially since an EV on average uses four times more copper than the standard ICE. Is this a non-factor? Or rather, an oversight on the part of those guiding us toward this automotive and energy revolution. This is what we seek to answer in our analysis. 
+
+Renewable Energy Growth
+
+As time progresses we are seeing a continued shift in our energy production sources. Climate change continues to be a major factor in the shift from fossil fuels to renewables. Advocates for cleaner and renewable energy sources continue to speak up about the potentially catastrophic effects of our continued reliance on fossil fuels. While this paper does not directly address the claims or data associated with climate change, it is still important to note where the catalyst pushing for EVs is coming from. 
+
+Our energy grid has been undergoing a transition period. Renewable energy production has seen a continued rise as shown in Figure 1.
+
+With the increase in renewable energy production we are also, expectedly, seeing an increase in renewable energy consumption. Where as the consumption in energy from fossil fuels seems to have stagnated. 
+
+As climate change attention continues to grow, we believe public sentiment will continue to grow in supporting this shift away from fossil fuels and towards renewable energy sources.
+
+Internal Combustion Engine Vehicles (ICE) and Electric Vehicles (EV)
+
+As we shift away from fossil fuels, the automotive industry is, understandably, in the cross hairs. The CO2 emissions released by vehicles are a major concern in the climate change arena, and automobile manufacturers are taking steps to limit these emissions. Hybrid vehicles have seen a rise in popularity, and seem to be a strong first step on the way towards full electric vehicles. The increase in technology and popularity of hybrid vehicles allows automakers to discuss a full transition to EVs. In the United States, this can be seen first and foremost with Tesla, the all-electric auto maker which has quickly climbed to the top of the auto industry hierarchy in terms of market capitalization. Going green is big business. 
+
+Companies such as Tesla have been earnestly communicating the pros of owning an EV. The Figures below show just a few of the advantages EVs have been shown to have over ICE vehicles. Figure 3 compares Lifetime Emission values between comparable EV and ICE vehicles. Figure 4 displays a comparison of the annual maintenance cost, and Figure 5 shows a comparison of the fuel cost per 15,000 miles driven. EVs seemingly have no shortage of advantages, both for the environment, and for the consumer. 
+
+Market Forces Supported by Government Action
+
+The consumer support for EVs doesn’t stop at words. Car buyers are opening their wallets to purchase EVs. Annual EV sales have seen a 4452% increase from 2011 to 2021.
+
+On September 14th, President Biden announced his plan to support a continued increase in EV production and sales. The President’s agenda is two-fold, and includes the Bipartisan Infrastructure Law, the Inflation Reduction Act, and the CHIPS and Science Act. The Bipartisan Infrastructure Law seeks to invest $7.5 billion into a national network of EV  chargers, more than $7 billion for domestic manufacturers to obtain the necessary materials to make batteries, and over $10 billion for green transit and school buses. The Inflation Reduction Act will incentivize the purchase of new and used EVs, give credits to manufacturers to boost production, and supply grants for zero-emission heavy-duty vehicles. The CHIPS and Science Act will provide investments for the domestic production of semiconductors of EVs. This is a particularly important investment considering the recent slowing of automobile production directly due to semiconductor shortages. 
+
+In order for the transition to succeed, the support must be substantial, and the proposed above legislation is just that. Along with this legislation, President Biden stated his goal for EV sales to make up 50% of all vehicle sales in the country by the year 2030. EV sales have already seen massive growth as seen on Figure 6, and these policies will attempt to accomplish a 1072% increase in EV sales from 2021 to 2030 as shown in Figure 7. 
+
+Semiconductors, heavy-duty vehicles, and charging stations are all important factors to account for when seeking to grow the EV market. However, there is one material we haven’t discussed so far which is integral to all things electric: Copper. Without enough copper, none of this legislation will matter. 
+
+Copper Production Analysis
+
+Copper continues to be the primary metal used for industrial electrical purposes, due to its high conductivity and relatively low price when compared to other conductive metals such as gold and silver. Thus, when imagining an electric-driven future, we must too imagine a future with ample supplies of copper. 
+
+Historically, automobiles have accounted for 16% of copper consumption in the United States. Clearly a minority category behind the likes of construction and plumbing.In order to understand the feasibility of a rapid expansion of the EV market, we must determine the necessary copper supply for said expansion and compare that with projected copper production values to ensure it can be met without disrupting other copper uses. 
+
+Our first forecast was generated using Neural Prophet. It is the forecast for copper production in the United States. 
+
+Out forecast shows that the United States will produce 1,763,000 Metric tons, or 3.92 billion pounds, of copper. In order to see if that is enough, we need to forecast auto sales for 2030, and take half of that value to represent EVs, seeing as how that is the sales goal laid out by the President. 
+
+Figure 10 shows that we forecast to sell 10,772,000 new vehicles in 2030. Which brings our EV sales goal to 5,386,000 units. According to the Copper Development Association, a typical EV uses about 180 pounds of copper. For our calculations we will be using 200 pounds/EV to account for the growing number of larger batteries required for larger EVs such as light trucks and SUVs. Therefore, in order to meet the EV sales goal in 2030, we need to allocate 1.07 billion pounds of copper towards EV production. According to our copper production forecast, 1.07 billion pounds makes up about 27% of the total copper produced. Referencing Figure 8, we can see that 27% is not an insignificant difference from the current 16% of copper allocated towards vehicle production. 
+
+If we were to rely solely on copper produced within the U.S., it does not appear like we could meet this increased EV production without significantly impacting other industries which utilize copper. However, if we could begin to import more copper to make up the difference, the probability of meeting this goal may seem more realistic. 
+
+Importing more copper from the global supply is possible, but would certainly raise the price of copper on a global scale. These increases in production costs would expectedly be passed on to the consumer. Everything that uses copper would become more expensive, including EVs. Any price hikes for EVs would make them more unattainable than they already are. This calls into question the effectiveness of the strategy we are discussing. Artificially increasing EV production is one thing. Increasing sales while the price of EVs rises would be more challenging. 
+
+The future of automotive industry is incredibly interesting. There are many factors at play here. We are watching in real time the passing of the torch; real disruptive innovation in the works. We sought to analyze the feasibility of intervening with market forces. The EV industry stands to receive a lot of assistance in the form of investments and incentives for certain aspects of production and sales. However, with copper seemingly being left out of that conversation, one can’t help but wonder if this intervention will even work.
+
+We found that if the U.S. is indeed to  have a 50/50 split between EVs and ICE vehicles produced in 2030, we would be exceeding our usual copper allocation for transportation by 11%. At current copper production rate trends, we do not produce enough copper to support this accelerated EV goal without impacting the copper supply of other industries. The U.S. could increase the amount of copper it imports, but that just shifts the copper supply disruption to the international level. At some point, copper production must be increased. While the solution seems simple, it is not swift. Once viable copper deposits are located, it can take 4-12 years to develop the location into a productive mine. 
+
+Instead of trying to accelerate the transition to full-electric vehicles, it may be beneficial to utilize hybrid vehicles, especially plug-in hybrids. Plug-in hybrids use substantially less copper than EVs, while also significantly improving efficiency, and therefore emissions, of vehicles. Hybrids use about 85 pounds of copper, and plug-in hybrids use about 130 pounds. Both significantly less that the 180-200 pounds of copper required for full-electric vehicles. Growing this hybrid fleet of vehicle is a step we should not so quickly seek to replace. Utilizing these vehicles could allow the expansion of copper mine production while still decreasing emissions in the meantime. 
+
+One thing seems clear, the transition from fossil fuels to renewables has begun. This process stands to affect every industry one way or another, and many people’s lives. As we continue to navigate through this path to cleaner energy grid, let us try to do so efficiently yet realistically. 
