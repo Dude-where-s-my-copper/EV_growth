@@ -6,6 +6,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
 from math import sqrt
 from sklearn.metrics import mean_squared_error
+from neuralprophet import NeuralProphet, set_log_level
 
 def time_series_split(df):
     train_size = .90
@@ -110,6 +111,9 @@ def clean_copper(df):
 
     df = df.replace('/p','', regex=True)
 
+    df.year = df.year.astype(float)
+    df.year = df.year.astype(int)
+
     df.set_index('year', inplace=True)
    
     df = df.astype('int')
@@ -138,3 +142,70 @@ def copper_split(df):
 
 
     return train, validate, test
+
+
+def last_global(train, validate):
+    # assign period of 1, representing one year
+    period = 1
+
+    # assign values for moving avg
+    mine_prod = round(train['mine_production'].rolling(period).mean().iloc[-1], 2)
+    refined_prod = round(train['refined_production'].rolling(period).mean().iloc[-1], 2)
+
+    # create dataframe with these values
+    yhat_df = pd.DataFrame({'mine_production': [mine_prod],
+                            'refined_production': [refined_prod],
+                           }, index = validate.index)
+
+    rmse1 = round(sqrt(mean_squared_error(validate.mine_production, yhat_df.mine_production)), 0)
+    print(f'The mine production RMSE is: {rmse1}')
+    plt.figure(figsize = (12,4))
+    plt.plot(train.mine_production, label = 'Train', linewidth = 1)
+    plt.plot(validate.mine_production, label = 'Validate', linewidth = 1)
+    plt.plot(yhat_df.mine_production)
+    plt.title('total sale') 
+     
+    rmse2 = round(sqrt(mean_squared_error(validate.refined_production, yhat_df.refined_production)), 0)
+    print(f'The refined production RMSE is: {rmse2}')
+    plt.figure(figsize = (12,4))
+    plt.plot(train.refined_production, label = 'Train', linewidth = 1)
+    plt.plot(validate.refined_production, label = 'Validate', linewidth = 1)
+    plt.plot(yhat_df.refined_production)
+    plt.title('total sale') 
+
+
+def global_prophet(train, validate):
+    mine_prod_df = pd.DataFrame(train.mine_production)
+
+    mine_prod_df = mine_prod_df.reset_index()
+
+    mine_prod_df.rename(columns = {'year':'ds'}, inplace=True)
+
+    mine_prod_df.rename(columns = {'mine_production':'y'}, inplace=True)
+
+    mine_prod_df['ds'] = pd.to_datetime(mine_prod_df['ds'])
+
+    # m = NeuralProphet()
+    # metrics = m.fit(mine_prod_df)
+    # forecast = m.predict(mine_prod_df)
+
+    # fig_forecast = m.plot(forecast)
+
+    # # clean validate for prophet
+    # val_mine_prod_df = pd.DataFrame(validate.mine_production)
+    # val_mine_prod_df = val_mine_prod_df.reset_index()
+    # val_mine_prod_df.rename(columns = {'year':'ds', 'mine_production':'y'}, inplace=True)
+
+    # # validate forecast
+    # val_forecast = m.predict(val_mine_prod_df)
+
+    # # validate plot
+    # fig_forecast = m.plot(val_forecast)
+
+
+    m4 = NeuralProphet(seasonality_mode= "auto", learning_rate = 0.1)
+    metrics_train2 = m4.fit(mine_prod_df)
+    future = m4.make_future_dataframe(mine_prod_df, periods=65, n_historic_predictions='auto')
+    forecast = m4.predict(future)
+    fig = m4.plot(forecast)
+    mine_prod_df.y.plot()
