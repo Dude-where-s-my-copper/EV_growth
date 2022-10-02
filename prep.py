@@ -1,3 +1,4 @@
+from lib2to3.pgen2.pgen import DFAState
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,6 +10,7 @@ from sklearn.metrics import mean_squared_error
 from neuralprophet import NeuralProphet, set_log_level
 
 def time_series_split(df):
+    ''' This function splits a time series dataframe into train validate and test. With train consisting of 80% of data, 10% to validate, 10% to test'''
     train_size = .90
     n = df.shape[0]
     test_start_index = round(train_size * n)
@@ -27,6 +29,7 @@ def time_series_split(df):
 
 
 def train_test_only(df):
+    '''This function splits a time series dataframe into train and test only. 80% remains for train and 20% is for test'''
     # Reassign the sale_date column to be a datetime type
     df.Year = pd.to_datetime(df.Year)
 
@@ -46,6 +49,7 @@ def train_test_only(df):
     return train, test
 
 def seasonality_plots(train, time):
+    '''This function displays seasonality of a training set given a time period'''
     result = seasonal_decompose(train, model='ad', extrapolate_trend='freq', period=time)
 
     from pylab import rcParams
@@ -53,6 +57,7 @@ def seasonality_plots(train, time):
     result.plot()
 
 def us_car_model(train, test):
+    '''This function fits a holt winters multiplicative model to the train set of us cars and predicts only to end of test. It also calculates the RMSE '''
     train['multiplicative'] = ExponentialSmoothing(train['total_sale'],trend='mul').fit().fittedvalues
     #train[['total_sale','multiplicative']].plot(title='Holt Winters Double Exponential Smoothing')
     fitted_model = ExponentialSmoothing(train['total_sale'],trend='mul',seasonal='mul',seasonal_periods=8).fit()
@@ -67,6 +72,8 @@ def us_car_model(train, test):
     print(f'The RMSE for the model is: {rmse}')
 
 def car_forecast(train, test, years):
+    '''This function uses the multiplicative model to predict out to 2030 and reassigns the index for better visualization '''
+
     fitted_model = ExponentialSmoothing(train['total_sale'],trend='mul',seasonal='mul',seasonal_periods=8).fit()
     forecast_predictions = fitted_model.forecast(years)
     
@@ -86,6 +93,7 @@ def car_forecast(train, test, years):
     plt.title('Train, validate and Predicted validate using Holt Winters')
 
 def last_obvs(train, test):
+    '''This function serves a baseline model to which we can compare our models against'''
     ## Assigning last observade value to a variable.
     last_sale = train['total_sale'][-1:][0]
     print(f'The last sale observation is: {last_sale}')
@@ -106,7 +114,7 @@ def last_obvs(train, test):
 #### Jeremy Global Production PREP
 
 def clean_copper(df):
-    
+    '''Using global copper this function cleans and formats the dataframe corrrectly'''
     df = df.replace(',','', regex=True)
 
     df = df.replace('/p','', regex=True)
@@ -126,6 +134,7 @@ def clean_copper(df):
 
 
 def copper_split(df):
+    '''Splits the global copper dataframe into train, validate, and test'''
     train_size = .90
     n = df.shape[0]
     test_start_index = round(train_size * n)
@@ -145,6 +154,7 @@ def copper_split(df):
 
 
 def last_global(train, validate):
+    '''Creates a baseline based of the last obeservation to compare future models against and prints the RMSE'''
     # assign period of 1, representing one year
     period = 1
 
@@ -175,6 +185,7 @@ def last_global(train, validate):
 
 
 def global_prophet(train, validate):
+    '''Function to assign the Nerual Prophet model to the global production dataframe'''
     mine_prod_df = pd.DataFrame(train.mine_production)
 
     mine_prod_df = mine_prod_df.reset_index()
@@ -209,3 +220,111 @@ def global_prophet(train, validate):
     forecast = m4.predict(future)
     fig = m4.plot(forecast)
     mine_prod_df.y.plot()
+
+
+    #################### KEVINS PREP SECTION#####
+
+
+def prep_us_copper(df):
+    '''Cleans and preps the US copper dataframe'''
+
+    df.year = pd.to_datetime(df.year)
+
+    df = df.set_index(('year'))
+
+    df = df.sort_index()
+    #df = df.reset_index()
+
+    return df
+   
+def plot_us_cop(df):
+    '''Plots all the columns in the US copper production dataframe '''
+
+    plt.figure(figsize=(5,5))
+    df.total_production.plot(label = 'Train')
+    df.total_consumption.plot()
+    df.copper_for_cars.plot()
+    plt.show()
+
+    for i in df.columns:
+        df[i].plot()
+        plt.title(f'{i}')
+        plt.show()
+
+def train_test_us_copper(df):
+    '''Splies the US copper dataframe into train and test 80% used in train and 20% used in test'''
+  
+    train_size = .80
+    n = df.shape[0]
+    test_start_index = round(train_size * n)
+
+    train = df[:test_start_index] # everything up (not including) to the test_start_index
+    test = df[test_start_index:] # everything from the test_start_index to the end
+
+    plt.plot(train.index, train.prod_mine)
+    plt.plot(test.index, test.prod_mine)
+
+    return train, test
+
+
+# def last_obvs(train, test):
+#     ## Assigning last observade value to a variable.
+#     last_sale = train['total_sale'][-1:][0]
+#     print(f'The last sale observation is: {last_sale}')
+#     yhat_df = pd.DataFrame(
+#         {'total_sale': [last_sale]},
+#         index=test.index)
+#     rmse = round(sqrt(mean_squared_error(test.total_sale, yhat_df.total_sale)), 0)
+#     print(f'The RMSE is: {rmse}')
+#     plt.figure(figsize = (12,4))
+#     plt.plot(train.total_sale, label = 'Train', linewidth = 1)
+#     plt.plot(test.total_sale, label = 'Validate', linewidth = 1)
+#     plt.plot(yhat_df.total_sale)
+#     plt.title('total sale')    
+
+def us_cop_prophet(df, train, test):
+    '''Assigns the Neural Prophet model to us copper production dataframe '''
+    train=train.reset_index()
+    prod_train = train.rename(columns={'year':'ds','total_production':'y'})[['ds', 'y']]
+
+    test=test.reset_index()
+    prod_test = test.rename(columns={'year':'ds','total_production':'y'})[['ds', 'y']]
+
+    production = df.rename(columns={'year':'ds','total_production':'y'})[['ds', 'y']]
+
+    model = NeuralProphet()
+    model.fit(prod_train)
+    future = model.make_future_dataframe(production, periods=0, n_historic_predictions=True)
+    prod_forecast = model.predict(future)
+
+
+    return prod_train, prod_test
+
+ ##### NLP PREP#####
+
+
+
+
+
+ ### BOLLINGER BANDS ####
+
+
+def bol_bands(df, span):
+
+    # compute midband
+    midband = df.ewm(span=span).mean()
+
+  # compute exponential stdev
+    stdev = df.ewm(span=span).std()    
+
+    # compute upper and lower bands
+    ub = midband + stdev*3
+    lb = midband - stdev*3
+
+    # concatenate ub and lb together into one df, bb
+    bb = pd.concat([ub, lb], axis=1)
+
+    bb.columns = ['ub', 'lb']
+
+
+    
