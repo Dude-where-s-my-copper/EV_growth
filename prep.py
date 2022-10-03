@@ -8,6 +8,15 @@ from statsmodels.tsa.holtwinters import ExponentialSmoothing
 from math import sqrt
 from sklearn.metrics import mean_squared_error
 from neuralprophet import NeuralProphet, set_log_level
+from PyPDF2 import PdfReader
+import unicodedata
+import re
+import json
+from dans_prepare import nlp_prep2
+import nltk
+from nltk.tokenize.toktok import ToktokTokenizer
+from nltk.corpus import stopwords
+from textblob import TextBlob
 
 def time_series_split(df):
     ''' This function splits a time series dataframe into train validate and test. With train consisting of 80% of data, 10% to validate, 10% to test'''
@@ -301,10 +310,37 @@ def us_cop_prophet(df, train, test):
     return prod_train, prod_test
 
  ##### NLP PREP#####
+def extract_pdf(file):
+    reader=PdfReader(file)
+    page_text=''
+    for i in range(reader.numPages):
+        page=reader.pages[i]
+        page_text=page_text+page.extract_text()
+    return page_text    
 
+def science_list():
+    article_list=[]
+    for i in range(8):
+        science=extract_pdf(f'scientific_article_{i+1}.pdf')
+        article_list.append(science)
+    df = pd.DataFrame(article_list)
+    return df
 
+def science_analysis():
+    df=science_list()
+    df.columns=['original']
+    df= nlp_prep2(df)
+    df['polarity'] = df.lemmatized.apply(lambda x: TextBlob (x).sentiment.polarity)
+    return df
 
-
+def white_paper_analysis():
+    white_paper=open('white_paper_minus_about_authors.txt')
+    white_paper = [white_paper.read()]
+    white_paper = pd.DataFrame(white_paper)
+    white_paper.columns=['original']
+    white_paper = nlp_prep2(white_paper)
+    white_paper['polarity'] = white_paper.lemmatized.apply(lambda x: TextBlob (x).sentiment.polarity)
+    return white_paper
 
  ### BOLLINGER BANDS ####
 
