@@ -165,7 +165,7 @@ Dependencies can be installed quickly with just a few lines of code.
 |total_sale| Number of cars sold in the united states | Thousands|
 
 
-# Project Planning <a name="plan"></a>
+
 
 - 
 
@@ -173,8 +173,32 @@ Dependencies can be installed quickly with just a few lines of code.
 
 
 
-__Sources:__
+## Summary
+- 5,033,500 cars to be electrified
+- Deficit of 312k Metric Tons
+- Imports included in US Production
+- Models do not account for the increase in copper for other industries
+- CO2 savings make up for the increased emissions of mining
 
-[Historic Prices of Copper] - https://www.macrotrends.net/1476/copper-prices-historical-chart-data - historic_prices.csv
+## Take aways
+- The US lacks sufficient production. New mines will not come online soon enough to be meet the goals needs. 
+- Pay more per ton for imports. However, this would increase the cost of vehicles as well. 
+- Increase Global Prod. ~1.5% w/ no other demand. No other country could import any of the increased global 
+- Another way to increase supply is to increase recycling can help make up deficits. Copper is infinitely recyclable. 
 
-[Domestic Auto Production] - https://fred.stlouisfed.org/series/DAUPSA - auto_production.csv
+## Recommended Next steps
+- Propose a plan to go 50% hybrid cars instead of full electric 
+- Short 21k metric tons instead of 312k metric tons. More possible to make up this difference in imports. 
+- Overall savings of 6,616,833 CO2 emissions after taking mining CO2 into effect
+- No additional infrastructure needed such as charging stations
+
+## If we had more time
+- Continue to build the copper price model
+- Look at global sales and see how that affects global copper supply
+
+
+
+
+
+
+
