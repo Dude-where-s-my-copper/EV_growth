@@ -18,19 +18,25 @@ from nltk.tokenize.toktok import ToktokTokenizer
 from nltk.corpus import stopwords
 from textblob import TextBlob
 
+
+## Jarad Angels prep section for US car sales Prediction
 def time_series_split(df):
     ''' This function splits a time series dataframe into train validate and test. With train consisting of 80% of data, 10% to validate, 10% to test'''
+    #Making train size 90% 
     train_size = .90
     n = df.shape[0]
     test_start_index = round(train_size * n)
 
+    #Splitting off test to be 10%
     train = df[:test_start_index] # everything up (not including) to the test_start_index
     test = df[test_start_index:]
 
+    #Splitting train again to 90 from what was left
     train_size = .90
     n2 = train.shape[0]
     validate_start_index = round(train_size * n2)
 
+    #Making a validate to be 10
     train = df[:validate_start_index] # everything up (not including) to the test_start_index
     validate = df[validate_start_index:test_start_index ]
 
@@ -52,6 +58,7 @@ def train_test_only(df):
     train = df[:test_start_index] # everything up (not including) to the test_start_index
     test = df[test_start_index:] # everything from the test_start_index to the end
 
+    #PLotting the splits
     plt.plot(train.index, train.total_sale)
     plt.plot(test.index, test.total_sale)
 
@@ -60,7 +67,7 @@ def train_test_only(df):
 def seasonality_plots(train, time):
     '''This function displays seasonality of a training set given a time period'''
     result = seasonal_decompose(train, model='ad', extrapolate_trend='freq', period=time)
-
+    #Plotting the seasonality
     from pylab import rcParams
     rcParams['figure.figsize'] = 12,5
     result.plot()
@@ -69,26 +76,36 @@ def us_car_model(train, test):
     '''This function fits a holt winters multiplicative model to the train set of us cars and predicts only to end of test. It also calculates the RMSE '''
     train['multiplicative'] = ExponentialSmoothing(train['total_sale'],trend='mul').fit().fittedvalues
     #train[['total_sale','multiplicative']].plot(title='Holt Winters Double Exponential Smoothing')
+    
+    #Fit the model
     fitted_model = ExponentialSmoothing(train['total_sale'],trend='mul',seasonal='mul',seasonal_periods=8).fit()
+    
+    #Forecast model to end of test
     validate_predictions = fitted_model.forecast(7)
+   
+   #Set index and plot each section
     validate_predictions.index = test.index
     train['total_sale'].plot(legend=True,label='TRAIN')
     #validate['total_sales'].plot(legend=True,label='validate',figsize=(6,4))
     test['total_sale'].plot(legend=True,label='test',figsize=(6,4))
     validate_predictions.plot(legend=True,label='PREDICTION')
     plt.title('Train, validate and Predicted validate using Holt Winters')
+    
+    #Find the RMSE on test to evaluate
     rmse = round(sqrt(mean_squared_error(test.total_sale, validate_predictions)), 0)
     print(f'The RMSE for the model is: {rmse}')
 
 def car_forecast(train, test, years):
     '''This function uses the multiplicative model to predict out to 2030 and reassigns the index for better visualization '''
-
+    #Fit the model
     fitted_model = ExponentialSmoothing(train['total_sale'],trend='mul',seasonal='mul',seasonal_periods=8).fit()
+    #Forecast the mode out to 2030 beyond test
     forecast_predictions = fitted_model.forecast(years)
     
     forecast_predictions=pd.DataFrame(forecast_predictions)
     year =  [2014, 2015, 2016,2017,2018,2019,2020,2021, 2022, 2023,2024,2025, 2026, 2027, 2028,2029,2030]
 
+    #setting the index to the be the same when it is graphed
     forecast_predictions['year'] = year
 
     forecast_predictions['year'] = pd.to_datetime(forecast_predictions['year'], format="%Y")
@@ -97,6 +114,7 @@ def car_forecast(train, test, years):
 
     train['total_sale'].plot(legend=True,label='TRAIN')
     
+    #Plotting the forecasts
     test['total_sale'].plot(legend=True,label='test',figsize=(6,4))
     forecast_predictions[0].plot(legend=True,label='PREDICTION')
     plt.title('Train, validate and Predicted validate using Holt Winters')
@@ -106,6 +124,8 @@ def last_obvs(train, test):
     ## Assigning last observade value to a variable.
     last_sale = train['total_sale'][-1:][0]
     print(f'The last sale observation is: {last_sale}')
+    
+    #Making the df to show in visualization and to find RMSE
     yhat_df = pd.DataFrame(
         {'total_sale': [last_sale]},
         index=test.index)
@@ -120,7 +140,7 @@ def last_obvs(train, test):
 
 
 
-#### Jeremy Global Production PREP
+#### Jeremy Lagunas Global Production PREP
 
 def clean_copper(df):
     '''Using global copper this function cleans and formats the dataframe corrrectly'''
@@ -231,7 +251,7 @@ def global_prophet(train, validate):
     mine_prod_df.y.plot()
 
 
-    #################### KEVINS PREP SECTION#####
+    #################### KEVIN Smith's PREP SECTION#####
 
 
 def prep_us_copper(df):
@@ -309,7 +329,7 @@ def us_cop_prophet(df, train, test):
 
     return prod_train, prod_test
 
- ##### NLP PREP#####
+ ##### NLP PREP by Daniel Ford and Kevin#####
 def extract_pdf(file):
     reader=PdfReader(file)
     page_text=''
@@ -342,25 +362,9 @@ def white_paper_analysis():
     white_paper['polarity'] = white_paper.lemmatized.apply(lambda x: TextBlob (x).sentiment.polarity)
     return white_paper
 
- ### BOLLINGER BANDS ####
+ ### BOLLINGER BANDS  See jarad_bollinger_band notebook####
 
 
-def bol_bands(df, span):
-
-    # compute midband
-    midband = df.ewm(span=span).mean()
-
-  # compute exponential stdev
-    stdev = df.ewm(span=span).std()    
-
-    # compute upper and lower bands
-    ub = midband + stdev*3
-    lb = midband - stdev*3
-
-    # concatenate ub and lb together into one df, bb
-    bb = pd.concat([ub, lb], axis=1)
-
-    bb.columns = ['ub', 'lb']
 
 
-    
+
